@@ -22,15 +22,16 @@
 #include <errno.h>
 #include <stdlib.h>
 
+extern char **environ;
 
 pid_t
 launch_game
-	(char *argv)
+	(char **argv)
 {
 	pid_t pid = fork();
 	if(pid == 0)
 	{
-		if(system(argv) == -1)
+		if(execve(argv[0], argv, environ) == -1)
 		{
 			perror("game launch failed");
 			exit(EXIT_FAILURE);

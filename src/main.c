@@ -25,7 +25,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-
+extern char **environ;
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  main
@@ -33,10 +33,25 @@
  * =====================================================================================
  */
 	int
-main ( int argc, char *argv[] )
+main ( int argc, char **argv )
 {
-	char* gameargs = "\"/fast_access/Steam/steamapps/common/Crusader Kings III/binaries/ck3\" >> /dev/null 2>&1";
+	char *gameargs[] = {"/fast_access/Steam/steamapps/common/Crusader Kings III/binaries/ck3", NULL};
+	pid_t pid = launch_game(gameargs);
+	int status;
+	while(1)
+	{
+		waitpid(pid, &status, WNOHANG);
+		if(WIFEXITED(status))
+		{
+			printf("exited with code %d\n", WEXITSTATUS(status));
+			break;
+		}
+		if(WIFSIGNALED(status))
+		{
+			printf("game terminated with signal %d\n", WTERMSIG(status));
+			break;
+		}
 
-	launch_game(gameargs);
+	}
 	return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */

@@ -23,6 +23,6 @@
 
 pid_t
 launch_game
-	(char *argv);
+	(char **argv);
 
 #endif /* LAUNCH_GAME_H */
