@@ -1,6 +1,6 @@
 CFLAGS = -O3 -Wall -g
 COMPILER := clang 
-LINK := -g
+LINK := -g -lncurses
 INCLUDE_OPTIONS := -I./inc
 TARGET := heathen
 
@@ -31,4 +31,10 @@ depend: ; gcc-makedepend $(addprefix -p ,$(OBJDIRS)) $(CFLAGS) $(INCLUDES) $(SRC
 format:; uncrustify --no-backup -c /home/freyja/.defaults/uncrustify.cfg $(SRC) $(INC)
 # DO NOT DELETE
 obj/launch_game.o: src/launch_game.c inc/launch_game.h
-obj/main.o: src/main.c inc/launch_game.h
+obj/state_switcher.o: src/state_switcher.c inc/state_switcher.h inc/defines.h \
+ inc/main_menu.h inc/instance_menu.h
+obj/main_menu.o: src/main_menu.c inc/main_menu.h inc/defines.h
+obj/main.o: src/main.c inc/defines.h inc/launch_game.h inc/state_switcher.h \
+ inc/defines.h
+obj/instance_menu.o: src/instance_menu.c inc/instance_menu.h inc/defines.h \
+ inc/launch_game.h
