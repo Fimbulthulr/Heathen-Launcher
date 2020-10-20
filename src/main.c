@@ -25,17 +25,40 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#define PDX_PATH ".local/share/Paradox Interactive"
+#define CK3_PATH "Crusader Kings III"
+
 extern char **environ;
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  main
- *  Description:  
- * =====================================================================================
- */
-	int
-main ( int argc, char **argv )
+int
+main
+	(int argc, 
+	 char **argv)
 {
-	char *gameargs[] = {"/fast_access/Steam/steamapps/common/Crusader Kings III/binaries/ck3", NULL};
+	//switching to game folder
+	char *home = getenv("HOME");
+	int err = chdir(home);
+	if(err == -1)
+	{
+		perror("could not switch to home\n");
+		exit(EXIT_FAILURE);
+	}
+	err = chdir(PDX_PATH);
+	if(err == -1)
+	{
+		perror("could not switch to paradox user directory\n");
+		exit(EXIT_FAILURE);
+	}
+	err = chdir(CK3_PATH);
+	if(err == -1)
+	{
+		perror("could not switch to CKIII directory\n");
+		exit(EXIT_FAILURE);
+	}
+
+
+
+
+	char *gameargs[] = {"heathen_launcher/ck3", NULL};
 	pid_t pid = launch_game(gameargs);
 	printf("child pid is %d\n", pid);
 	int status;
@@ -58,5 +81,5 @@ main ( int argc, char **argv )
 		}
 
 	}
-	return EXIT_SUCCESS;
-}				/* ----------  end of function main  ---------- */
+	//*/
+}
