@@ -219,9 +219,9 @@ submenu_instance_creation
 	switch(selected)
 	{
 		case Back		: ret = 0; break;
-		case Default	: mode = mDefault;
-		case Debug		: mode = mDebug;
-		case Devel		: mode = mDevel; ret = add_instance(data, game, mode); break;
+		case Default	: mode = mDefault;  ret = add_instance(data, game, mode); break;
+		case Debug		: mode = mDebug;	ret = add_instance(data, game, mode); break;
+		case Devel		: mode = mDevel;	ret = add_instance(data, game, mode); break;
 		
 	}
 	return ret;
