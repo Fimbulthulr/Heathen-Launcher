@@ -42,59 +42,6 @@ instance_check
 	mvwprintw(w, 0, 0, "╔════════════════════════════════════════════════════════════════╗");
 	mvwprintw(w, data->n_instance*2, 0, "╚════════════════════════════════════════════════════════════════╝");
 	int selected = 0;
-	/*
-	struct timespec curr_time;
-	clock_gettime(CLOCK_REALTIME, &curr_time);
-	for(int i = 0; i < data->n_instance; ++i)
-	{
-		struct game_instance *curr = data->instance + i;
-		int hours, seconds, minutes, status;
-		pid_t r_pid;
-		char s_status[14] = {};
-		seconds = curr_time.tv_sec - curr->starttime.tv_sec;
-		minutes = seconds/60;
-		seconds %= 60;
-		hours = minutes / 60;
-		minutes %= 60;
-		r_pid = waitpid(curr->pid, &status, WNOHANG);
-		if(r_pid == 0)
-		{
-			snprintf(s_status, 14, "Running"); 
-		}
-		else if(WIFEXITED(status))
-		{
-			snprintf(s_status, 14, "Exited(%d)", WEXITSTATUS(status));
-		}
-		else if(WIFSIGNALED(status))
-		{
-			snprintf(s_status, 14, "Terminated(%d)", WTERMSIG(status));
-		}
-		else
-		{
-			snprintf(s_status, 14, "ERROR");
-		}
-
-		if(i == selected)
-		{
-			wattron(w, A_STANDOUT);
-		}
-		mvwprintw(w, 2*i+1, 1, "%-13s%5d:%02d:%02d   Mode: %-10sStatus: %s",curr->game, hours, minutes, seconds, curr->mode, s_status );
-		if(i == selected)
-		{
-			wattroff(w, A_STANDOUT);
-		}
-	}
-	if(selected == data->n_instance)
-	{
-		wattron(w, A_STANDOUT);
-		mvwprintw(w, data->n_instance*2+1, 0, "Back");
-		wattroff(w, A_STANDOUT);
-	}
-	else
-	{
-		mvwprintw(w, data->n_instance*2+1, 0, "Back");
-	}
-	*/
 	instance_update(data, w, selected);
 
 	keypad( w, TRUE );
@@ -117,58 +64,6 @@ instance_check
 		}
 		
 		instance_update(data, w, selected);
-		/*
-		clock_gettime(CLOCK_REALTIME, &curr_time);
-		for(int i = 0; i < data->n_instance; ++i)
-		{
-			struct game_instance *curr = data->instance + i;
-			int hours, seconds, minutes, status;
-			pid_t r_pid;
-			char s_status[14] = {};
-			seconds = curr_time.tv_sec - curr->starttime.tv_sec;
-			minutes = seconds/60;
-			seconds %= 60;
-			hours = minutes / 60;
-			minutes %= 60;
-			r_pid = waitpid(curr->pid, &status, WNOHANG);
-			if(r_pid == 0)
-			{
-				snprintf(s_status, 14, "Running"); 
-			}
-			else if(WIFEXITED(status))
-			{
-				snprintf(s_status, 14, "Exited(%d)", WEXITSTATUS(status));
-			}
-			else if(WIFSIGNALED(status))
-			{
-				snprintf(s_status, 14, "Terminated(%d)", WTERMSIG(status));
-			}
-			else
-			{
-				snprintf(s_status, 14, "ERROR");
-			}
-
-			if(i == selected)
-			{
-				wattron(w, A_STANDOUT);
-			}
-			mvwprintw(w, 2*i+1, 1, "%-13s%5d:%02d:%02d   Mode: %-10sStatus: %s",curr->game, hours, minutes, seconds, curr->mode, s_status );
-			if(i == selected)
-			{
-				wattroff(w, A_STANDOUT);
-			}
-		}
-		if(selected == data->n_instance)
-		{
-			wattron(w, A_STANDOUT);
-			mvwprintw(w, data->n_instance*2+1, 0, "Back");
-			wattroff(w, A_STANDOUT);
-		}
-		else
-		{
-			mvwprintw(w, data->n_instance*2+1, 0, "Back");
-		}
-		*/
 		if(q == 1)
 		{
 			if(selected < data->n_instance)
