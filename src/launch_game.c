@@ -26,25 +26,28 @@
 #include<sys/stat.h>
 #include<fcntl.h>
 
+#include <spawn.h>
 
+
+extern char **environ;
 
 pid_t
 launch_game
 	(char **argv)
 {
-	pid_t pid = fork();
-	if(pid == 0) //execute game in the child proces
-	{
-#ifndef GAME_ADDITIONAL_LOGGING		//reroute stdout & stderr to /dev/null unless specified otherwise
-		int fd = open("/dev/null", O_WRONLY | O_APPEND);
-		dup2(fd, 1);
-		dup2(fd, 2);
+	pid_t pid;
+	posix_spawn_file_actions_t actions;
+	posix_spawn_file_actions_init(&actions);
+#ifndef HEATHEN_GAME_ADDITIONAL_LOGGING
+	posix_spawn_file_actions_addopen(&actions, 3, "/dev/null", O_WRONLY | O_APPEND, 0222);
+	posix_spawn_file_actions_adddup2(&actions, 3, 1);
+	posix_spawn_file_actions_adddup2(&actions, 3, 2);
 #endif
-		if(execv(argv[0], argv) == -1)
-		{
-			perror("game launch failed");
-			_exit(EXIT_FAILURE);
-		}
+	int status = posix_spawn(&pid, argv[0], &actions, NULL, argv, environ);
+	
+	if(status != 0)
+	{
+		perror("game launch failed");
 	}
 	return pid;
 }
