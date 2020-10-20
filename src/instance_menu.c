@@ -27,7 +27,7 @@
 
 #define ENTRIES 3
 #define ENTRY_LENGTH 13
-#define GAMES 2
+#define GAMES (1 + N_GAMES)
 #define GAME_LENGTH 10
 #define LAUNCHTYPES 4
 #define LAUNCH_LENGTH 7
@@ -104,8 +104,40 @@ void
 submenu_game_selection
 	(struct launcher_data *data)
 {
-	char g_menu[GAMES][GAME_LENGTH] = {"CKIII", "back"};
-	enum games{Ck3 = 0, Back} selected = 0;
+	char g_menu[GAMES][GAME_LENGTH] = {
+#ifdef HAS_CK3
+		"CK III",
+#endif
+#ifdef HAS_EU4
+		"EU IV",
+#endif
+#ifdef HAS_HOI4
+		"HoI IV",
+#endif
+#ifdef HAS_IMPERATOR
+		"Imperator",
+#endif
+#ifdef HAS_STELLARIS
+		"Stellaris",
+#endif
+		"back"};
+	enum games{
+#ifdef HAS_CK3 
+		Ck3, 
+#endif
+#ifdef HAS_EU4  
+		Eu4, 
+#endif
+#ifdef HAS_HOI4  
+		Hoi4, 
+#endif
+#ifdef HAS_IMPERATOR  
+		Imperator, 
+#endif
+#ifdef HAS_STELLARIS 
+		Stellaris, 
+#endif
+		Back} selected = 0;
 	
 	WINDOW *w = newwin(GAMES + 2, GAME_LENGTH + 2, 3, ENTRY_LENGTH+2);
 	box(w, 0, 0);
@@ -147,8 +179,22 @@ submenu_game_selection
 			enum selected_game game;
 			switch(selected)
 			{
-				case Ck3	: game = gCk3; break;
-				case Back	: game = 0; break;	//should never be reached
+#ifdef HAS_CK3
+				case Ck3		: game = gCk3;			break;
+#endif
+#ifdef HAS_EU4 
+				case Eu4		: game = gEu4;			break;
+#endif
+#ifdef HAS_HOI4 
+				case Hoi4		: game = gHoi4;			break;
+#endif
+#ifdef HAS_IMPERATOR 
+				case Imperator	: game = gImperator;	break;
+#endif
+#ifdef HAS_STELLARIS 
+				case Stellaris	: game = gStellaris;	break;
+#endif
+				case Back		: game = 0;				break;	//should never be reached
 			}
 			q = submenu_instance_creation(data, game);
 		}
@@ -236,7 +282,11 @@ add_instance
 	int err;
 	switch(game)
 	{
-		case gCk3	: err = chdir(CK3_PATH);
+		case gCk3		: err = chdir(CK3_PATH);		break;
+		case gEu4		: err = chdir(EU4_PATH);		break;
+		case gHoi4		: err = chdir(HOI4_PATH);		break;
+		case gImperator	: err = chdir(IMPERATOR_PATH);	break;
+		case gStellaris	: err = chdir(STELLARIS_PATH);	break;
 	}
 	if(err == -1)
 	{
@@ -256,6 +306,7 @@ add_instance
 		case mDefault : argv[0] = "heathen_launcher/game";
 	}
 	pid_t pid = launch_game(argv);
+	chdir("..");
 	if(pid == 0)
 	{
 		return 0;
@@ -265,7 +316,11 @@ add_instance
 	char *s_game;
 	switch(game)
 	{
-		case gCk3	: s_game =  "ck3"; break;
+		case gCk3		: s_game = "CK III";	break;
+		case gEu4		: s_game = "EU IV";		break;
+		case gHoi4		: s_game = "HoI IV";	break;
+		case gImperator : s_game = "Imperator"; break;
+		case gStellaris : s_game = "Stellaris"; break;
 	};
 	data->instance[data->n_instance-1].game = s_game;
 	data->instance[data->n_instance-1].pid = pid;

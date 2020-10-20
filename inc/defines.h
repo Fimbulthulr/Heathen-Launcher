@@ -21,12 +21,22 @@
 
 #define PDX_PATH ".local/share/Paradox Interactive"
 #define CK3_PATH "Crusader Kings III"
+#define EU4_PATH "Europa Universalis IV"
+#define HOI4_PATH "Hearts of Iron IV"
+#define STELLARIS_PATH "Stellaris"
+#define IMPERATOR_PATH "Imperator"
 
 #include <stddef.h>
 #include <time.h>
 #include <sys/types.h>
 
-enum selected_game{gCk3};
+#define HAS_CK3
+#define HAS_IMPERATOR
+#define HAS_EU4
+#define HAS_STELLARIS
+#define HAS_HOI4 
+
+enum selected_game{gCk3, gEu4, gStellaris, gImperator, gHoi4};
 
 struct game_instance
 {
@@ -44,5 +54,39 @@ struct launcher_data
 	int rows;
 	enum states{Quit, Main, Instance, Check} state;
 };
+
+
+//sum available games
+#ifdef HAS_CK3
+#define CK3_VAL 1
+#else 
+#define CK3_VAL 0
+#endif
+
+#ifdef HAS_EU4 
+#define EU4_VAL 1
+#else 
+#define EU4_VAL 0
+#endif
+
+#ifdef HAS_HOI4 
+#define HOI4_VAL 1
+#else 
+#define HOI4_VAL 0
+#endif
+
+#ifdef HAS_IMPERATOR 
+#define IMP_VAL 1
+#else 
+#define IMP_VAL 0
+#endif
+
+#ifdef HAS_STELLARIS
+#define STEL_VAL 1
+#else 
+#define STEL_VAL 0
+#endif
+
+#define N_GAMES CK3_VAL + EU4_VAL + HOI4_VAL + IMP_VAL + STEL_VAL
 
 #endif /* DEFINES_H */
