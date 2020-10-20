@@ -93,9 +93,9 @@ instance_menu
 	delwin(w);
 	switch(selected)
 	{
-		case iCheck		: data->state = Quit; break; //temporary quit
-		case iMain		: data->state = Main; break;
-		case iNew		: data->state = Quit; break; //should not be reached, quit on error
+		case iCheck		: data->state = Check; break; 
+		case iMain		: data->state = Main;  break;
+		case iNew		: data->state = Quit;  break; //should not be reached, quit on error
 	}
 
 }
@@ -269,6 +269,14 @@ add_instance
 	};
 	data->instance[data->n_instance-1].game = s_game;
 	data->instance[data->n_instance-1].pid = pid;
+	char *s_mode;
+	switch(mode)
+	{
+		case mDefault	: s_mode = "Default"; break;
+		case mDebug		: s_mode = "Debug";	  break;
+		case mDevel		: s_mode = "Develop"; break;
+	}
+	data->instance[data->n_instance-1].mode = s_mode;
 	
 	struct stat statbuf;
 	char *proc = NULL;

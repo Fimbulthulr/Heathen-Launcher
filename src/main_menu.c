@@ -29,7 +29,7 @@ main_menu
 {
 	WINDOW* mainmenu = newwin(0,0, 3, 0);
 	
-	char *menu[MENUENTRIES] = {"launch new instance", "quit"};
+	char *menu[MENUENTRIES] = {"Instance management", "Quit"};
 
 	enum menu{mInstance = 0, mQuit} selected = mInstance;
 	for(int i = 0; i < MENUENTRIES; ++i)

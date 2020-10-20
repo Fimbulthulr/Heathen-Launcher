@@ -19,6 +19,7 @@
 #include "state_switcher.h"
 #include "main_menu.h"
 #include "instance_menu.h"
+#include "instance_check.h"
 
 void
 state_switcher
@@ -30,7 +31,8 @@ state_switcher
 		{
 			case Main		: main_menu(data);		break;
 			case Instance	: instance_menu(data);	break;
-			default			: data->state = Quit;	break;
+			case Check		: instance_check(data); break;
+			case Quit		: data->state = Quit;	break;
 		}
 	}
 }

@@ -22,6 +22,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <locale.h>
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -55,7 +56,7 @@ main
 		exit(EXIT_FAILURE);
 	}
 */
-
+	setlocale(LC_CTYPE, ""); // unicode support
 	initscr();			/* Start curses mode		*/
 	start_color();			/* Start the color functionality */
 	cbreak();			/* Line buffering disabled, Pass on

@@ -33,6 +33,7 @@ struct game_instance
 	char* game;
 	struct timespec starttime;
 	pid_t pid;
+	char* mode;
 };
 
 struct launcher_data
@@ -41,7 +42,7 @@ struct launcher_data
 	struct game_instance *instance;
 	int lines;
 	int rows;
-	enum states{Quit, Main, Instance} state;
+	enum states{Quit, Main, Instance, Check} state;
 };
 
 #endif /* DEFINES_H */
