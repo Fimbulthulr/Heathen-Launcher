@@ -30,5 +30,5 @@ clean: ; rm -f $(TARGET) $(OBJ)
 depend: ; gcc-makedepend $(addprefix -p ,$(OBJDIRS)) $(CFLAGS) $(INCLUDES) $(SRC)
 format:; uncrustify --no-backup -c /home/freyja/.defaults/uncrustify.cfg $(SRC) $(INC)
 # DO NOT DELETE
-obj/launch_game.o: src/launch_game.c inc/launch_game.h
 obj/main.o: src/main.c inc/launch_game.h
+obj/launch_game.o: src/launch_game.c inc/launch_game.h

@@ -22,23 +22,28 @@
 #include <errno.h>
 #include <stdlib.h>
 
-extern char **environ;
+#include <unistd.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+
+
 
 pid_t
 launch_game
 	(char **argv)
 {
 	pid_t pid = fork();
-	if(pid == 0)
+	if(pid == 0) //execute game in the child proces
 	{
-		if(execve(argv[0], argv, environ) == -1)
+#ifndef GAME_ADDITIONAL_LOGGING		//reroute stdout & stderr to /dev/null unless specified otherwise
+		int fd = open("/dev/null", O_WRONLY | O_APPEND);
+		dup2(fd, 1);
+		dup2(fd, 2);
+#endif
+		if(execv(argv[0], argv) == -1)
 		{
 			perror("game launch failed");
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
-			exit(EXIT_SUCCESS);
+			_exit(EXIT_FAILURE);
 		}
 	}
 	return pid;
