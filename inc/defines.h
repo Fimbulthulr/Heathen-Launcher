@@ -43,6 +43,8 @@ struct game_instance
 	char* game;
 	struct timespec starttime;
 	pid_t pid;
+	enum statuscode{Running = 0, Exited, Terminated} status;
+	int exitcode;
 	char* mode;
 };
 

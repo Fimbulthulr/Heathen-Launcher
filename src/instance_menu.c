@@ -75,6 +75,7 @@ instance_menu
 		{
 			case KEY_UP		: selected ? --selected :0; break;
 			case KEY_DOWN	: (ENTRIES - selected - 1) ? ++selected:0;break;
+			case KEY_LEFT	: selected = iMain;
 			case KEY_RIGHT	:	
 			case '\n'		: //main enter key
 			case KEY_ENTER	: q = 1; break;//enter on numeric block
