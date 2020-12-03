@@ -87,30 +87,4 @@ main
 	state_switcher(&data);
 
 	endwin();
-	/*
-	char *gameargs[] = {"heathen_launcher/ck3", NULL};
-	pid_t pid = launch_game(gameargs);
-	printf("child pid is %d\n", pid);
-	int status;
-	while(1)
-	{
-		pid_t return_pid = waitpid(pid, &status, WNOHANG);
-		if(return_pid == 0)
-		{
-			printf("game is running\n");
-		}
-		else if(WIFEXITED(status))
-		{
-			printf("exited with code %d\n", WEXITSTATUS(status));
-			break;
-		}
-		else if(WIFSIGNALED(status))
-		{
-			printf("game terminated with signal %d\n", WTERMSIG(status));
-			break;
-		}
-		sleep(1);
-
-	}
-	//*/
 }

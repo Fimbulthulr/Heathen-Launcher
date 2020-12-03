@@ -21,7 +21,7 @@
 
 #include <curses.h>
 
-#define MENUENTRIES 2
+#define MENUENTRIES 3
 
 void
 main_menu 
@@ -29,9 +29,9 @@ main_menu
 {
 	WINDOW* mainmenu = newwin(0,0, 3, 0);
 	
-	char *menu[MENUENTRIES] = {"Instance management", "Quit"};
+	char *menu[MENUENTRIES] = {"Instance management", "Mod Management", "Quit"};
 
-	enum menu{mInstance = 0, mQuit} selected = mInstance;
+	enum menu{mInstance = 0, mMod, mQuit} selected = mInstance;
 	for(int i = 0; i < MENUENTRIES; ++i)
 	{
 		if(i == selected)
@@ -74,6 +74,7 @@ main_menu
 	{
 		case mInstance	: data->state = Instance; break;
 		case mQuit		: data->state = Quit; break;
+		case mMod		: data->state = Mod; break;
 	}
 	
 }

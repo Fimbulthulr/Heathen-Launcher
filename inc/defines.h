@@ -54,7 +54,7 @@ struct launcher_data
 	struct game_instance *instance;
 	int lines;
 	int rows;
-	enum states{Quit, Main, Instance, Check} state;
+	enum states{Quit, Main, Instance, Check, Mod} state;
 };
 
 
