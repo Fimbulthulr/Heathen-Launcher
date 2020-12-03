@@ -2,3 +2,4 @@ heathen
 .vimrc.local
 compile_commands.json
 obj/
+.cache/
