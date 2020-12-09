@@ -1,6 +1,6 @@
 CFLAGS = -O3 -Wall -g
 COMPILER := clang 
-LINK := -g -lncurses
+LINK := -g -lncurses -lcjson
 INCLUDE_OPTIONS := -I./inc
 TARGET := heathen
 
@@ -40,3 +40,5 @@ obj/main_menu.o: src/main_menu.c inc/main_menu.h inc/defines.h
 obj/main.o: src/main.c inc/defines.h inc/launch_game.h inc/state_switcher.h \
  inc/defines.h
 obj/read_mods.o: src/read_mods.c inc/read_mods.h inc/mod_defines.h
+obj/playset_management.o: src/playset_management.c inc/playset_management.h \
+ inc/mod_defines.h
