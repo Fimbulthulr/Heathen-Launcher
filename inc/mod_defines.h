@@ -20,6 +20,7 @@
  */
 
 #include <stddef.h>
+#include <inttypes.h>
 
 struct mod_file
 {
@@ -36,7 +37,13 @@ struct mods_structure {
 	size_t n_mods;
 	size_t mods_buf;
 	struct mod_file *mods;
-};				/* ----------  end of struct mods_structure  ---------- */
+};
 
+struct playset
+{
+	size_t n_mods;
+	struct mod_file **mods;
+	uint8_t *enabled;
+};
 
 #endif /* MOD_DEFINES_H */
