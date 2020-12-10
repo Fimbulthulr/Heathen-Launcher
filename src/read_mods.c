@@ -50,7 +50,6 @@ read_mods
 		perror("Reading directory failed");
 		return;
 	}
-
 	while( (entry = readdir(directory)) )
 	{
 		char *file_ending = strrchr(entry->d_name, '.');
@@ -108,10 +107,13 @@ read_mod
 	close(fd);
 	char *start, *end;
 	
+
+
 	start = strstr(file, "name");
 	start = strchr(start, '"');
 	end = strchr(start + 1, '"');
 	mod->name_length = end - start;
+	mod->name = calloc(sizeof(*mod->name), mod->name_length);
 	memcpy(mod->name, start + 1, mod->name_length - 1);
 	mod->name[mod->name_length-1] = '\0';
 	
@@ -119,6 +121,7 @@ read_mod
 	start = strchr(start, '"');
 	end = strchr(start + 1, '"');
 	mod->version_length = end - start;
+	mod->version = calloc(sizeof(*mod->version), mod->version_length);
 	memcpy(mod->version, start + 1, mod->version_length - 1);
 	mod->version[mod->version_length-1] = '\0';
 

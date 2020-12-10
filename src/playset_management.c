@@ -27,6 +27,8 @@
 
 #include "playset_management.h"
 
+#define MAX_FILENAME 256
+
 struct playset *
 load_playset
 	(char *path,
@@ -64,8 +66,8 @@ load_playset
 	cJSON *curr_mod = mod_array->child;
 	for(size_t i = 0; i < n_mods; ++i, curr_mod = curr_mod->next)
 	{
-		ssize_t string_length = strlen(curr_mod->valuestring);
-		char *modname = calloc(sizeof(*modname), string_length+1);
+		char modname[MAX_FILENAME + 13];
+		memset(modname, 0, MAX_FILENAME + 13);
 		strcpy(modname, curr_mod->valuestring);
 		char* ending = strrchr(modname, '.');
 		if(strcmp(ending, ".disabled") == 0)
@@ -73,15 +75,30 @@ load_playset
 			*ending = '\0';
 			playset->enabled[i/sizeof(*playset->enabled)] &= ~(1 << (i % sizeof(*playset->enabled)) );
 			playset->mods[i] = NULL;
+			char *no_path = strrchr(modname, '/') + 1;
 			for(size_t j = 0; j < available_mods->n_mods; ++j)
 			{
-				if(strcmp(modname, available_mods->mods[j].filename) == 0)
+				if(strcmp(no_path, available_mods->mods[j].filename) == 0)
 				{
 					playset->mods[i] = available_mods->mods+j;
 					break;
 				}
 			}
-			free(modname);
+		}
+		else
+		{
+			playset->enabled[i/sizeof(*playset->enabled)] |= (1 << (i % sizeof(*playset->enabled)) );
+			playset->mods[i] = NULL;
+			char *no_path = strrchr(modname, '/') + 1;
+			for(size_t j = 0; j < available_mods->n_mods; ++j)
+			{
+				if(strcmp(no_path, available_mods->mods[j].filename) == 0)
+				{
+					playset->mods[i] = available_mods->mods+j;
+					break;
+				}
+			}
+
 		}
 	}
 	cJSON_Delete(json);
@@ -94,5 +111,35 @@ write_playset
 	(struct playset *playset,
 	 char *path)
 {
+	cJSON *array = cJSON_CreateArray();
+	char modname[MAX_FILENAME+9];
+	for(size_t i = 0; i < playset->n_mods; ++i)
+	{
+		memset(modname, 0, MAX_FILENAME + 9);
+		strcpy(modname, playset->mods[i]->filename);
+		if( !((playset->enabled[i/sizeof(*playset->enabled)]) &( 1 << (i % sizeof(*playset->enabled))) ) )
+		{
+			strcat(modname, ".disabled");
+		}
+		cJSON_AddItemToArray(array, cJSON_CreateString(modname));
+	}
+	cJSON *object = cJSON_CreateObject();
+	cJSON_AddItemToObjectCS(object, "enabled_mods", array);
+	cJSON_AddItemToObjectCS(object, "disabled_dlcs", cJSON_CreateArray());
+	char* json_string = cJSON_Print(object);
+	cJSON_Delete(object);
+	int fd = open(path, O_WRONLY | O_TRUNC | O_CREAT);
+	ssize_t filesize = strlen(json_string);
+	ssize_t written = 0;
+	while(written < filesize)
+	{
+		ssize_t tmp = write(fd, json_string + written, filesize - written);
+		if(tmp != -1)
+		{
+			written += tmp;
+		}
+	}
 
+	close(fd);
+	free(json_string);
 }
