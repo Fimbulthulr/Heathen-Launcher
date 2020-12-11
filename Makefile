@@ -1,4 +1,4 @@
-CFLAGS = -O3 -Wall -g
+CFLAGS = -O3 -Wall -g -std=gnu11
 COMPILER := clang 
 LINK := -g -lncurses -lcjson
 INCLUDE_OPTIONS := -I./inc
@@ -42,3 +42,4 @@ obj/main.o: src/main.c inc/defines.h inc/launch_game.h inc/state_switcher.h \
 obj/read_mods.o: src/read_mods.c inc/read_mods.h inc/mod_defines.h
 obj/playset_management.o: src/playset_management.c inc/playset_management.h \
  inc/mod_defines.h
+obj/graph.o: src/graph.c inc/graph.h
