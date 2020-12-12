@@ -6,7 +6,7 @@
  *
  *       Filename:  read_mods.h
  *
- *    Description:  
+ *    Description:
  *
  *        Version:  1.0
  *        Created:  03/12/20 21:26:53
@@ -23,7 +23,8 @@
 
 void
 read_mods
-	(char *path,
-	 struct mods_structure *mods);
+    (char *path,
+    struct mods_structure *mods);
+
 
 #endif /* READ_MODS_H */

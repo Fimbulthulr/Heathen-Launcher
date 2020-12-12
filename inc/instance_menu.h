@@ -6,15 +6,15 @@
  *
  *       Filename:  instance_menu.h
  *
- *    Description:  
+ *    Description:
  *
  *        Version:  1.0
  *        Created:  20/10/20 13:56:59
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  Freyja Walberg (), 
- *   Organization:  
+ *         Author:  Freyja Walberg (),
+ *   Organization:
  *
  * =====================================================================================
  */
@@ -24,6 +24,7 @@
 
 void
 instance_menu
-	(struct launcher_data *data);
+    (struct launcher_data *data);
+
 
 #endif /* INSTANCE_MENU_H */

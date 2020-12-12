@@ -6,7 +6,7 @@
  *
  *       Filename:  graph.h
  *
- *    Description:  
+ *    Description:
  *
  *        Version:  1.0
  *        Created:  11/12/20 08:59:29
@@ -30,10 +30,10 @@ struct graph
 	size_t **adjacency_list;
 };
 
+
 int
 lexicographically_minimal_topological_sort
-	(size_t n,
-	 size_t *L,
-	 struct graph *g);
-
+    (size_t n,
+    size_t *L,
+    struct graph *g);
 #endif /* GRAPH_H */

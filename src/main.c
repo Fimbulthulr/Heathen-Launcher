@@ -3,15 +3,15 @@
  *
  *       Filename:  main.c
  *
- *    Description:  
+ *    Description:
  *
  *        Version:  1.0
  *        Created:  19/10/20 20:44:50
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  Freyja Walberg (), 
- *   Organization:  
+ *         Author:  Freyja Walberg (),
+ *   Organization:
  *
  * =====================================================================================
  */
@@ -20,9 +20,9 @@
 #include "launch_game.h"
 #include "state_switcher.h"
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <locale.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -30,14 +30,18 @@
 #include <curses.h>
 
 extern char **environ;
+
 int
 main
-	(int argc, 
-	 char **argv)
+    (int argc,
+    char **argv)
 {
 	//switching to game folder
 	char *home = getenv("HOME");
 	int err = chdir(home);
+
+
+
 	if(err == -1)
 	{
 		perror("could not switch to home\n");
@@ -50,18 +54,18 @@ main
 		exit(EXIT_FAILURE);
 	}
 /*	err = chdir(CK3_PATH);
-	if(err == -1)
-	{
-		perror("could not switch to CKIII directory\n");
-		exit(EXIT_FAILURE);
-	}
-*/
+    if(err == -1)
+    {
+        perror("could not switch to CKIII directory\n");
+        exit(EXIT_FAILURE);
+    }
+ */
 	setlocale(LC_CTYPE, ""); // unicode support
-	initscr();			/* Start curses mode		*/
-	start_color();			/* Start the color functionality */
-	cbreak();			/* Line buffering disabled, Pass on
-															 * everty thing to me		*/
-	keypad(stdscr, TRUE);		/* I need that nifty F1		*/
+	initscr();          /* Start curses mode		*/
+	start_color();          /* Start the color functionality */
+	cbreak();           /* Line buffering disabled, Pass on
+	                     * everty thing to me		*/
+	keypad(stdscr, TRUE);       /* I need that nifty F1		*/
 	noecho();
 	curs_set(0);
 
@@ -69,18 +73,20 @@ main
 
 
 	//create new window for title
-	
+
 	WINDOW *title = newwin(3, 0, 0, 0);
+
 	init_pair(1, COLOR_RED, COLOR_BLACK);
-	wattron(title,COLOR_PAIR(1));
+	wattron(title, COLOR_PAIR(1) );
 	wborder(title, '#', '#', '#', '#', '#', '#', '#', '#');
-	mvwprintw(title, 1, (COLS-16)/2, "Heathen Launcher");		
-	wattroff(title, COLOR_PAIR(1));
+	mvwprintw(title, 1, (COLS - 16) / 2, "Heathen Launcher");
+	wattroff(title, COLOR_PAIR(1) );
 	refresh();
 	wrefresh(title);
 
 
 	struct launcher_data data = {};
+
 	data.lines = LINES - 3;
 	data.rows = COLS;
 	data.state = Main;
@@ -88,3 +94,6 @@ main
 
 	endwin();
 }
+
+
+

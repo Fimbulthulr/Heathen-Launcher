@@ -6,7 +6,7 @@
  *
  *       Filename:  mod_defines.h
  *
- *    Description:  
+ *    Description:
  *
  *        Version:  1.0
  *        Created:  03/12/20 21:35:41
@@ -19,8 +19,8 @@
  * =====================================================================================
  */
 
-#include <stddef.h>
 #include <inttypes.h>
+#include <stddef.h>
 
 struct mod_file
 {
@@ -39,11 +39,13 @@ struct mods_structure {
 	struct mod_file *mods;
 };
 
+
 struct playset
 {
 	size_t n_mods;
 	struct mod_file **mods;
 	uint8_t *enabled;
 };
+
 
 #endif /* MOD_DEFINES_H */

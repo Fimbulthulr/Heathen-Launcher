@@ -6,15 +6,15 @@
  *
  *       Filename:  launch_game.h
  *
- *    Description:  
+ *    Description:
  *
  *        Version:  1.0
  *        Created:  19/10/20 20:33:51
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  Freyja Walberg (), 
- *   Organization:  
+ *         Author:  Freyja Walberg (),
+ *   Organization:
  *
  * =====================================================================================
  */
@@ -23,6 +23,9 @@
 
 pid_t
 launch_game
-	(char **argv);
+    (char **argv);
+
+
+
 
 #endif /* LAUNCH_GAME_H */

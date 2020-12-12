@@ -6,7 +6,7 @@
  *
  *       Filename:  playset_management.h
  *
- *    Description:  
+ *    Description:
  *
  *        Version:  1.0
  *        Created:  09/12/20 05:01:44
@@ -21,14 +21,18 @@
 
 #include "mod_defines.h"
 
-struct playset *
+struct playset*
 load_playset
-	(char *path,
-	 struct mods_structure *available_mods);
+    (char *path,
+    struct mods_structure *available_mods);
+
 
 void
 write_playset
-	(struct playset *playset,
-	 char *path);
+    (struct playset *playset,
+    char *path);
+
+
+
 
 #endif /* PLAYSET_MANAGEMENT_H */
