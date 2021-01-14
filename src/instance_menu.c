@@ -424,88 +424,37 @@ add_instance
     enum selected_game game,
     enum selected_mode mode)
 {
-	int err;
-
+	char *launchpath;
 
 
 	switch(game)
 	{
-	case gCk3:
-	{
-		err = chdir(CK3_PATH);
-	}
-	break;
-
-	case gEu4:
-	{
-		err = chdir(EU4_PATH);
-	}
-	break;
-
-	case gHoi4:
-	{
-		err = chdir(HOI4_PATH);
-	}
-	break;
-
-	case gImperator:
-	{
-		err = chdir(IMPERATOR_PATH);
-	}
-	break;
-
-	case gStellaris:
-	{
-		err = chdir(STELLARIS_PATH);
-	}
-	break;
-	}
-	if(err == -1)
-	{
-		perror("could not switch to CKIII directory\n");
+		case gCk3		: launchpath = data->gamepaths.ck3;			break;
+		case gEu4		: launchpath = data->gamepaths.eu4;			break;
+		case gHoi4		: launchpath = data->gamepaths.hoi4;		break;
+		case gImperator : launchpath = data->gamepaths.imperator;	break;
+		case gStellaris : launchpath = data->gamepaths.stellaris;	break;
 	}
 
 	char **argv;
 
 	switch(mode)
 	{
-	case mDefault:
-	{
-		argv = calloc(sizeof(char*), 2);
+		case mDefault :	argv = calloc(sizeof(char*), 2); break;
+		case mDebug	  :	argv = calloc(sizeof(char*), 3); break;
+		case mDevel   :	argv = calloc(sizeof(char*), 4); break;
 	}
-	break;
-
-	case mDebug:
-	{
-		argv = calloc(sizeof(char*), 3);
-	}
-	break;
-
-	case mDevel:
-	{
-		argv = calloc(sizeof(char*), 4);
-	}
-	break;
-	}
+	
 	switch(mode)
 	{
-	case mDevel:
-	{
-		argv[2] = "-develop";
-	}
-
-	case mDebug:
-	{
-		argv[1] = "-debug_mode";
-	}
-
-	case mDefault:
-		argv[0] = "heathen_launcher/game";
+		case mDevel   : argv[2] = "-develop";
+		case mDebug   : argv[1] = "-debug_mode";
+		case mDefault :	argv[0] = launchpath;
 	}
 
 	pid_t pid = launch_game(argv);
+	free(argv);
 
-	chdir("..");
 	if(pid == 0)
 	{
 		return 0;

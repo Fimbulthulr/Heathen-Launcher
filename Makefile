@@ -31,15 +31,15 @@ depend: ; gcc-makedepend $(addprefix -p ,$(OBJDIRS)) $(CFLAGS) $(INCLUDES) $(SRC
 format:; uncrustify --no-backup -c /home/freyja/.defaults/uncrustify.cfg $(SRC) $(INC)
 # DO NOT DELETE
 obj/launch_game.o: src/launch_game.c inc/launch_game.h
-obj/state_switcher.o: src/state_switcher.c inc/state_switcher.h inc/defines.h \
- inc/main_menu.h inc/instance_menu.h inc/instance_check.h
-obj/instance_menu.o: src/instance_menu.c inc/instance_menu.h inc/defines.h \
- inc/launch_game.h
-obj/instance_check.o: src/instance_check.c inc/instance_check.h inc/defines.h
+obj/state_switcher.o: src/state_switcher.c inc/instance_check.h inc/defines.h \
+ inc/instance_menu.h inc/main_menu.h inc/state_switcher.h
 obj/main_menu.o: src/main_menu.c inc/main_menu.h inc/defines.h
-obj/main.o: src/main.c inc/defines.h inc/launch_game.h inc/state_switcher.h \
- inc/defines.h
+obj/instance_check.o: src/instance_check.c inc/instance_check.h inc/defines.h
 obj/read_mods.o: src/read_mods.c inc/read_mods.h inc/mod_defines.h
 obj/playset_management.o: src/playset_management.c inc/playset_management.h \
  inc/mod_defines.h
 obj/graph.o: src/graph.c inc/graph.h
+obj/instance_menu.o: src/instance_menu.c inc/instance_menu.h inc/defines.h \
+ inc/launch_game.h
+obj/main.o: src/main.c inc/defines.h inc/launch_game.h inc/state_switcher.h \
+ inc/defines.h

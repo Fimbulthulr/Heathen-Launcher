@@ -20,11 +20,7 @@
  */
 
 #define PDX_PATH ".local/share/Paradox Interactive"
-#define CK3_PATH "Crusader Kings III"
-#define EU4_PATH "Europa Universalis IV"
-#define HOI4_PATH "Hearts of Iron IV"
-#define STELLARIS_PATH "Stellaris"
-#define IMPERATOR_PATH "Imperator"
+
 
 #include <stddef.h>
 #include <sys/types.h>
@@ -35,6 +31,9 @@
 #define HAS_EU4
 #define HAS_STELLARIS
 #define HAS_HOI4
+
+
+#define HEATHEN_PATH "heathen_launcher"
 
 enum selected_game {gCk3, gEu4, gStellaris, gImperator, gHoi4};
 
@@ -57,6 +56,14 @@ struct launcher_data
 	int lines;
 	int rows;
 	enum states {Quit, Main, Instance, Check, Mod} state;
+	struct 
+	{
+		char *ck3;
+		char *eu4;
+		char *hoi4;
+		char *imperator;
+		char *stellaris;
+	} gamepaths;
 };
 
 
