@@ -1,0 +1,39 @@
+#!/bin/sh
+#Add all steam paths to search for the games here
+Steam_path=".local/share/Steam"
+
+cd ~
+
+ck3=$(find $Steam_path  -path "*/Crusader Kings III/binaries/ck3" -printf "ck3=\"%p\"\n")
+eu4=$(find $Steam_path  -path "*/Europa Universalis IV/eu4" -printf "eu4=\"%p\"\n")
+hoi4=$(find $Steam_path  -path "*/Hearts of Iron IV/hoi4" -printf "hoi4=\"%p\"\n")
+imperator=$(find $Steam_path  -path "*/ImperatorRome/binaries/imperator" -printf "imperator=\"%p\"\n")
+stellaris=$(find $Steam_path  -path "*/Stellaris/stellaris" -printf "stellaris=\"%p\"\n")
+
+mkdir -p .local/share/Paradox\ Interactive/heathen_launcher
+> .local/share/Paradox\ Interactive/heathen_launcher/gamepaths
+if [ ! -z "$ck3" ]; then
+    echo ck3 found
+    mkdir -p .local/share/Paradox\ Interactive/heathen_launcher/ck3
+    echo $ck3 >> .local/share/Paradox\ Interactive/heathen_launcher/gamepaths
+fi 
+if [ ! -z "$eu4" ]; then
+    echo eu4 found
+    mkdir -p .local/share/Paradox\ Interactive/heathen_launcher/eu4
+    echo $eu4 >> .local/share/Paradox\ Interactive/heathen_launcher/gamepaths
+fi 
+if [ ! -z "$hoi4" ]; then
+    echo hoi4 found
+    mkdir -p .local/share/Paradox\ Interactive/heathen_launcher/hoi4
+    echo $hoi4 >> .local/share/Paradox\ Interactive/heathen_launcher/gamepaths
+fi 
+if [ ! -z "$imperator" ]; then
+    echo imperator found
+    mkdir -p .local/share/Paradox\ Interactive/heathen_launcher/imperator 
+    echo $imperator >> .local/share/Paradox\ Interactive/heathen_launcher/gamepaths
+fi 
+if [ ! -z "$stellaris" ]; then
+    echo stellaris found
+    mkdir -p .local/share/Paradox\ Interactive/heathen_launcher/stellaris
+    echo $stellaris >> .local/share/Paradox\ Interactive/heathen_launcher/gamepaths
+fi 
